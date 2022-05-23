@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dino's Eye</title>
+
+        <style type="text/css">
+
+            :root {
+                --size: 400px;
+
+                --skin: #FF7E79;
+                --pupil: #000000;
+                --iris: #FFD479;
+                --sclera: #ffe4aa;
+            }
+
+            body { 
+                margin: 0;
+                padding: 0;
+                background-color: var(--skin);
+            }
+
+            .wrapper {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 100%;
+                text-align: center;
+            }
+
+            .eye {
+                margin: 0;
+                padding: 0;
+                width: var(--size);
+                height: var(--size);
+                background-color: var(--sclera);
+                display: inline-block;
+                border-radius: 50%;
+                position: relative; 
+                overflow: hidden;
+                cursor: pointer;
+                /* box-shadow: inset 0 0 42px var(--skin); */
+            }
+
+            .shadow {
+                width: calc(var(--size) + 2px);
+                height: calc(var(--size) + 2px);
+                top: -1px;
+                left: -1px;
+                border-radius: 50%;
+                position: absolute;
+                box-shadow:
+                    inset 0 0 calc(var(--size) / 10) var(--skin),
+                    inset calc(var(--size) / 20) calc(var(--size) / 20) calc(var(--size) / 10) rgba(0, 0, 0, 0.3);
+            }
+
+            .pupil {
+                width: calc(var(--size) / 3);
+                height: calc(var(--size) / 3);
+                background: black;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: calc(var(--size) / 8) solid var(--iris);
+                border-radius: 50%;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+
+            document.onmousemove = () => {
+                const x_0_1 = event.clientX / window.innerWidth;
+                const y_0_1 = event.clientY / window.innerHeight;
+
+                const x_percent = x_0_1 * 100 + "%";
+                const y_percent = y_0_1 * 100 + "%";
+
+                const x_neg1_1 = (x_0_1 - 0.5) * 2;
+                const y_neg1_1 = (y_0_1 - 0.5) * 2;
+
+                const x_abs = Math.abs(x_neg1_1);
+                const y_abs = Math.abs(y_neg1_1);
+
+                const x_skew = x_abs*Math.sign(-y_neg1_1)*Math.sign(x_neg1_1)
+                const y_skew = y_abs*Math.sign(-x_neg1_1)*Math.sign(y_neg1_1)
+
+
+                const x_diff = document.querySelector(".pupil").style.position;
+                console.log(x_diff);
+
+                // console.log(x_0_1, y_0_1);
+                // console.log(x_abs, y_abs);
+
+
+                const pupil = document.querySelector(".pupil");
+
+                pupil.style.left = x_percent;
+                pupil.style.top = y_percent;
+
+                
+                // pupil.style.transform = "translateX(-"+x_percent+") translateY(-"+y_percent+") skewX("+(10*x_skew)+"deg) skewY("+(10*y_skew)+"deg) scale("+(1-(x_abs*.15))+")";
+
+                // pupil.style.transform = "scaleY(.5) ";
+            }
+                
+        </script>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <div class="eye">
+                <div class="pupil"></div>
+                <div class="shadow"></div>
+              </div>
+        </div>
+    </body>
+</html>
