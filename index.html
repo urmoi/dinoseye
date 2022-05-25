@@ -3,20 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=16.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dino's Eye</title>
 
         <style type="text/css">
 
-            @media only screen {
-                :root {
-                    --size: 400px;
-                }
+            :root {
+                --size: 400px;
+                --scale: 1.0;
             }
 
-            @media only screen and (max-width: 900px) {
+            @media only screen and (max-width: 800px) {
                 :root {
-                    --size: 200px;
+                    --scale: 0.5;
                 }
             }
 
@@ -33,11 +32,11 @@
                 background-color: var(--skin);
             }
 
-            .wrapper {
+            .eye_wrapper {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translateY(-50%) translatex(-50%);
+                transform: translateY(-50%) translatex(-50%) scale(var(--scale));
 
                 height: var(--size);
                 width: var(--size);
@@ -46,6 +45,7 @@
                 text-align: center;
 
                 cursor: pointer;
+
             }
 
             .lid {
@@ -137,7 +137,7 @@
     </head>
 
     <body>
-        <div class="wrapper">
+        <div class="eye_wrapper">
             <div class="eye">
                 <div class="pupil"></div>
             </div>
