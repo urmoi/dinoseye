@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme_bronto">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +8,19 @@
 
         <style type="text/css">
 
-            :root {
-                --size: 400px;
+            @media only screen {
+                :root {
+                    --size: 400px;
+                }
+            }
 
+            @media only screen and (max-width: 900px) {
+                :root {
+                    --size: 200px;
+                }
+            }
+
+            .theme_bronto {
                 --skin: #FF7E79;
                 --pupil: #000000;
                 --iris: #FFD479;
