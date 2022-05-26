@@ -11,6 +11,8 @@
             :root {
                 --size: 400px;
                 --scale: 1.0;
+
+                --footprints: #424242;
             }
 
             @media only screen and (max-width: 800px) {
@@ -24,12 +26,67 @@
                 --pupil: #000000;
                 --iris: #FFD479;
                 --sclera: #ffe4aa;
+
+                --eyeheight: 90%;
+                --lidcorrection: calc(var(--eyeheight) * 0.5);
+
+                --pupilsheight: 30%;
+                --pupilswidth: 30%;
+
+                --iriswidth: 0.125
             }
 
+            .theme_trex {
+                --skin: #77DD77;
+                --pupil: #000000;
+                --iris: #a7e99c;
+                --sclera: #ffe4aa;
+
+                --eyeheight: 50%;
+                --lidcorrection: calc(var(--eyeheight) * 0.5);
+
+                --pupilsheight: 45%;
+                --pupilswidth: 15%;
+
+                --iriswidth: 0.2
+            }
+
+            .theme_stego {
+                --skin: #FBBB62;
+                --pupil: #000000;
+                --iris: #FFD479;
+                --sclera: #ffe4aa;
+
+                --eyeheight: 100%;
+                --lidcorrection: calc(var(--eyeheight) * 0.5);
+
+                --pupilsheight: 25%;
+                --pupilswidth: 25%;
+
+                --iriswidth: 0.3
+            }
+
+            .theme_tric {
+                --skin: #C25964;
+                --pupil: #000000;
+                --iris: #FFD479;
+                --sclera: #ffe4aa;
+
+                --eyeheight: 100%;
+                --lidcorrection: calc(var(--eyeheight) * 0.5);
+
+                --pupilsheight: 50%;
+                --pupilswidth: 50%;
+
+                --iriswidth: 0.1
+            }
+
+            
+
             body { 
-                margin: 0;
-                padding: 0;
                 background-color: var(--skin);
+
+                transition: background-color 0.5s;
             }
 
             .eye_wrapper {
@@ -50,16 +107,16 @@
 
             .lid {
                 position: absolute;
-                top: -45%;
+                top: calc(-1 * var(--lidcorrection));
                 left: -50%;
 
                 width: 100%;
-                height: 90%;
+                height: var(--eyeheight);
 
-                border: calc(var(--size) / 2) solid var(--skin);
+                border: calc(var(--size) * 0.5) solid var(--skin);
                 border-radius: 50%;
 
-                transition: all 500ms;
+                transition: all 0.5s;
             }
 
             .lid.is-active {
@@ -69,8 +126,10 @@
 
             .shadow {
                 box-shadow:
-                    inset 0 0 calc(var(--size) / 10) var(--skin),
-                    inset calc(var(--size) / 20) calc(var(--size) / 20) calc(var(--size) / 10) rgba(0, 0, 0, 0.3);
+                    inset 0 0 calc(var(--size) * 0.1) var(--skin),
+                    inset calc(var(--size) * 0.05) calc(var(--size) * 0.05) calc(var(--size) * 0.1) rgba(0, 0, 0, 0.3);
+
+                transition: 0.5s;
             }
 
             .eye {
@@ -92,22 +151,109 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
 
-                width: 30%;
-                height: 30%;
+                width: var(--pupilswidth);
+                height: var(--pupilsheight);
 
-                background: var(--pupil);
+                background-color: var(--pupil);
 
-                border: calc(var(--size) / 8) solid var(--iris);
+                border: calc(var(--size) * var(--iriswidth)) solid var(--iris);
                 border-radius: 50%;
+
+                /* transition: width 0.5s, height 0.5s, background-color 0.5s, border 0.5s; */
+
+                transition: all 0.5s, top 0s, left 0s, transform 0s;
+            }
+
+            .menu_wrapper {
+                position: fixed;
+                right: 10px;
+                bottom: 10px;
+
+                width: 64px;
+                height: 64px;
+
+                float: left;
+
+                font-size: 0;
+
+                cursor: pointer;
+
+                opacity: 0.5;
+                transition: all 0.5s;
+            }
+            
+            .menu_wrapper:hover {
+                opacity: 1.0;
+            }
+
+            .menu_wrapper button {
+                position: relative;
+                bottom: 500%;
+
+                width: 64px;
+                height: 64px;
+
+                padding: 0;
+                margin: 0;
+
+                cursor: pointer;
+
+                visibility: hidden;
+                opacity: 0.1;
+
+                transition: all 0.5s;
+
+                border: none; text-align: center; text-decoration: none; font-size: 26px; cursor: pointer; overflow: hidden;
+
+                background-color: transparent;
+            }
+
+            .menu_wrapper {
+                fill: var(--footprints);
+                filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, 0.3));
+            }
+
+            .menu_wrapper svg {
+                filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, 0.3));
+            }
+
+            .menu_wrapper g {
+                fill: var(--footprints);
+                transition: all 0.5s;
+            }
+
+            button#bronto, button#tric {
+                right: 64px;
+            }
+
+            .menu_wrapper:hover button {
+                visibility: visible;
+                opacity: 1.0;
+            }
+
+            .menu_wrapper button#bronto:hover g {
+                fill: #FF7E79;
+            }
+
+            .menu_wrapper button#trex:hover g {
+                fill: #77DD77;
+            }
+
+            .menu_wrapper button#stego:hover g {
+                fill: #FBBB62;
+            }
+
+            .menu_wrapper button#tric:hover g {
+                fill: #C25964;
             }
 
         </style>
 
         <script type="text/javascript">
 
-            document.onclick = () => {
-                close_open_lid();
-            }
+            // document.onclick = () => {
+            //     close_open_lid();
+            // }
 
             document.onmousemove = () => {
                 const x_0_1 = event.clientX / window.innerWidth;
@@ -132,16 +278,57 @@
                 lid.classList.toggle("is-active");
                 setTimeout(() => {  lid.classList.toggle("is-active"); }, 500);
             }
+
+            function changeTheme(string) {
+                document.documentElement.className = `theme_${string}`;
+            }
                 
         </script>
     </head>
 
     <body>
-        <div class="eye_wrapper">
+        <div class="eye_wrapper" onclick="close_open_lid()">
             <div class="eye">
                 <div class="pupil"></div>
             </div>
             <div class="shadow lid"></div>
+        </div>
+
+        <div class="menu_wrapper">
+            <svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g id="Group" fill="#D8ACAC">
+                    <path d="M45.4322583,14.6580297 C46.8565074,14.3241212 48.073972,15.3366071 48.1515417,16.9194803 C48.2291114,18.5023535 47.1374121,20.0562121 45.713163,20.3901206 C44.288914,20.7240291 43.0714493,19.7115432 42.9938796,18.12867 C42.9163099,16.5457968 44.0080092,14.9919382 45.4322583,14.6580297 Z M17.6014652,5.16060824 C20.6738822,3.91927119 24.2547294,5.61121197 25.5995112,8.93966374 C26.944293,12.2681155 25.5437679,15.9726613 22.4713509,17.2139984 C19.3989339,18.4553354 15.8180868,16.7633946 14.4733049,13.4349429 C13.1285231,10.1064911 14.5290482,6.40194529 17.6014652,5.16060824 Z M32.4812389,16.6077745 C42.9388358,16.6077745 47.3200549,23.9030109 47.3200549,32.657727 C47.3200549,41.4124431 43.5689604,56 34.8707702,56 C26.1725799,56 27.6694412,50.1310197 32,43.6147903 C36.3305588,37.0985609 29.7043664,33.1732554 25.2406751,33.1732554 C20.7769838,33.1732554 20.342692,26.983595 20.342692,25.9709933 C20.342692,19.9419865 22.023642,16.6077745 32.4812389,16.6077745 Z M39,10.5 C40.6568542,10.5 42,11.8431458 42,13.5 C42,15.1568542 40.6568542,16.5 39,16.5 C37.3431458,16.5 36,15.1568542 36,13.5 C36,11.8431458 37.3431458,10.5 39,10.5 Z M31.5,8.5 C33.1568542,8.5 34.5,10.0670034 34.5,12 C34.5,13.9329966 33.1568542,15.5 31.5,15.5 C29.8431458,15.5 28.5,13.9329966 28.5,12 C28.5,10.0670034 29.8431458,8.5 31.5,8.5 Z" id="Shape"></path>
+                </g>
+            </svg>
+            <button id="trex" onclick="changeTheme('trex')"> 
+                <svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Group-4" fill="#D8ACAC">
+                        <path d="M29.365436,57 C37.6055341,57 40.40536,52.8353844 44.2372149,44.3051724 C48.0690698,35.7749604 53.7195743,25.1644 51.4983955,19.9758455 C49.2772167,14.787291 43.4120299,27.5117899 40.4780389,29.7668069 C37.5440478,32.0218239 42.652815,9.50468417 36.3599409,7.60796182 C30.0670668,5.71123948 26.7948394,29.474013 24.4976273,26.4716157 C22.2004152,23.4692184 15.5782498,8.19019064 13.2603521,14.8012869 C10.9424545,21.4123832 14.5299965,29.1207568 15.964007,38.0092635 C17.3980175,46.8977702 21.1253378,57 29.365436,57 Z" id="Oval"></path>
+                    </g>
+                </svg>
+            </button>
+            <button id="tric" onclick="changeTheme('tric')">
+                <svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Group-2" fill="#D8ACAC">
+                        <path d="M30.25,56 C41.8253616,56 44,49.7319865 44,42 C44,32.2477229 51.444463,28.7165288 51.444463,20.3599469 C51.444463,12.0033649 42.0407385,20.5054728 38.9987639,26.1699422 C35.9567893,31.8344116 40.4114978,8.19857009 35.2200274,8.19857009 C32.1132681,8.19857009 29.5820814,14.7695424 28.0629463,18.6724228 C23.7693606,29.7032723 22.6180726,25.7929288 20.2824746,17.5072693 C17.8483233,8.87198664 13.5431512,7.80315861 12.7971021,17.9948141 C12.489696,22.1942395 17,37.9129934 17,42 C17,49.7319865 18.6746384,56 30.25,56 Z" id="Oval"></path>
+                    </g>
+                </svg>
+            </button>
+            <button id="stego" onclick="changeTheme('stego')">
+                <svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Group-3" fill="#D8ACAC">
+                        <path d="M33.2510012,50.464979 C36.6312762,50.464979 43.0216033,53.9835579 45.4298235,48.5331542 C47.8380436,43.0827505 56.3255878,37.0436084 56.9173543,30.8842278 C57.5091207,24.7248471 49.391917,34.330001 50.8458033,24.5411793 C52.2996896,14.7523575 47.6967393,14.6983006 44.2851575,19.2227343 C40.8735756,23.7471681 40.353833,23.7471681 40.353833,17.4455527 C40.353833,11.1439373 33.810693,9.25727473 31.9279428,15.596509 C30.0451927,21.9357433 29.9237702,21.7939954 27.5315098,16.7316966 C25.1392494,11.6693979 17.9734851,12.456686 17.9734851,18.2876553 C17.9734851,24.1186246 20.5992407,34.4342647 14.6065288,28.901294 C8.61381689,23.3683233 4.99707429,28.8413069 7.96547624,35.4941169 C10.9338782,42.1469269 13.0178303,39.6598615 18.922721,47.9911107 C24.8276118,56.32236 30.0341225,50.464979 33.2510012,50.464979 Z" id="Oval"></path>
+                    </g>
+                </svg>
+            </button>
+            <button id="bronto" onclick="changeTheme('bronto')">
+                <svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    
+                    <g id="Group" fill="#D8ACAC">
+                        <path d="M31.0650662,21.5023649 L31.75,21.5 L31.75,21.5 L32.4349338,21.5023649 C32.5486364,21.5031611 32.6621079,21.5041624 32.775341,21.5053745 L33.4518226,21.5152266 L33.4518226,21.5152266 L34.1222422,21.5304269 L34.1222422,21.5304269 L34.7862581,21.5512609 C34.8963747,21.5552185 35.0062104,21.5594228 35.1157578,21.5638797 L35.7695271,21.5936993 C45.3057532,22.0769027 52.5,24.6081488 52.5,33.2397959 C52.5,43.0484858 43.2099086,51 31.75,51 C20.2900914,51 11,43.0484858 11,33.2397959 C11,24.6081488 18.1942468,22.0769027 27.7304729,21.5936993 L28.3842422,21.5638797 C28.4937896,21.5594228 28.6036253,21.5552185 28.7137419,21.5512609 L29.3777578,21.5304269 L29.3777578,21.5304269 L30.0481774,21.5152266 L30.0481774,21.5152266 L30.724659,21.5053745 C30.8378921,21.5041624 30.9513636,21.5031611 31.0650662,21.5023649 L31.0650662,21.5023649 Z M47.701903,18.951903 C48.8734758,17.7803301 50.8521164,17.8594757 52.1213203,19.1286797 C53.3905243,20.3978836 53.4696699,22.3765242 52.298097,23.548097 C51.1265242,24.7196699 49.1478836,24.6405243 47.8786797,23.3713203 C46.6094757,22.1021164 46.5303301,20.1234758 47.701903,18.951903 Z M17.75,15 C20.3733526,15 22.5,16.4550746 22.5,18.25 C22.5,20.0449254 20.3733526,21.5 17.75,21.5 C15.1266474,21.5 13,20.0449254 13,18.25 C13,16.4550746 15.1266474,15 17.75,15 Z M41.25,15 C43.0449254,15 44.5,16.2312169 44.5,17.75 C44.5,19.2687831 43.0449254,20.5 41.25,20.5 C39.4550746,20.5 38,19.2687831 38,17.75 C38,16.2312169 39.4550746,15 41.25,15 Z M30,13.5 C31.9329966,13.5 33.5,14.8431458 33.5,16.5 C33.5,18.1568542 31.9329966,19.5 30,19.5 C28.0670034,19.5 26.5,18.1568542 26.5,16.5 C26.5,14.8431458 28.0670034,13.5 30,13.5 Z" id="Shape"></path>
+                    </g>
+                </svg>
+            </button>
         </div>
     </body>
 </html>
